@@ -1674,6 +1674,29 @@
         /* ========================================
            INSTRUCTOR CARD DESIGN
            ======================================== */
+        .carousel-container {
+            position: relative;
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .instructors-wrapper {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .instructors-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
         .instructor-card-container {
             background: #f8fafc;
             /* Light background similar to reference */
@@ -1681,8 +1704,59 @@
             padding: 40px;
             box-shadow: var(--shadow-md);
             border: 1px solid rgba(0, 0, 0, 0.05);
-            max-width: 1000px;
-            margin: 0 auto;
+            flex: 0 0 calc(100% - 2px);
+            /* Single card visible */
+            scroll-snap-align: center;
+            min-width: 0;
+        }
+
+        /* Carousel Navigation */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev {
+            left: -10px;
+        }
+
+        .carousel-nav.next {
+            right: -10px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                padding: 0 20px;
+            }
+
+            .instructor-card-container {
+                flex: 0 0 85vw;
+            }
+
+            .carousel-nav {
+                display: none;
+                /* Hide arrows on mobile, use touch scroll */
+            }
         }
 
         .instructor-profile-header {
@@ -1746,6 +1820,13 @@
             gap: 20px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .instructor-card-container {
+                flex: 0 0 85vw;
+                scroll-snap-align: center;
+            }
         }
 
         @media (max-width: 600px) {
@@ -2114,50 +2195,120 @@
              ======================================== -->
         <section id="instructor" class="section">
             <div class="container">
-                <div class="instructor-card-container animate" style="text-align: left;">
-                    <div class="instructor-profile-header">
-                        <div class="instructor-photo">
-                            <!-- Using the generated logo image or a placeholder if it fails -->
-                            <img src="1740139296460.jpeg" alt="Nikhil Jain"
-                                style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
-                                onerror="this.onerror=null; this.parentElement.innerHTML='NJ';">
+                <div class="carousel-container">
+                    <button class="carousel-nav prev" aria-label="Previous Instructor">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <div class="instructors-wrapper" id="instructors-carousel">
+                        <!-- Instructor 1 (Nikhil) -->
+                        <div class="instructor-card-container animate" style="text-align: left;">
+                            <div class="instructor-profile-header">
+                                <div class="instructor-photo">
+                                    <!-- Using the generated logo image or a placeholder if it fails -->
+                                    <img src="1740139296460.jpeg" alt="Nikhil Jain"
+                                        style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+                                        onerror="this.onerror=null; this.parentElement.innerHTML='NJ';">
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Nikhil Jain <a href="https://www.linkedin.com/in/jnikhil/" target="_blank"
+                                            class="instructor-social-icon"
+                                            style="margin-left: 10px; color: #0077b5;"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                            </svg></a></h3>
+                                    <div class="instructor-title">Seasoned AI Product Leader | 10+ Years Scaling EdTech
+                                        Platforms</div>
+                                </div>
+                            </div>
+
+                            <div class="instructor-bio-text" style="margin-bottom: 20px;">
+                                <p>Nikhil Jain is a product leader with 10+ years of experience in PM and startup roles.
+                                    He currently drives AI innovation at Great Learning and is an IIT Kharagpur alumnus.
+                                    In this program, he inspires young minds to build, prototype, and scale their own
+                                    AI-driven ventures.</p>
+                            </div>
+
+                            <div class="instructor-details-grid">
+                                <div class="detail-group">
+                                    <h4>Experience:</h4>
+                                    <ul>
+                                        <li><strong>Product Leader:</strong> Multi-year PM experience</li>
+                                        <li><strong>Founder:</strong> Built and ran a startup</li>
+                                        <li><strong>Builder:</strong> 10+ years shipping real-world products</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-group">
+                                    <h4>Recognition:</h4>
+                                    <ul>
+                                        <li><strong>IIT Kharagpur Alumnus</strong></li>
+                                        <li><strong>EdTech Professional</strong></li>
+                                        <li><strong>Mentored Young Builders</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="instructor-info">
-                            <h3>Nikhil Jain <a href="https://www.linkedin.com/in/jnikhil/" target="_blank"
-                                    class="instructor-social-icon" style="margin-left: 10px; color: #0077b5;"><svg
-                                        width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                                    </svg></a></h3>
-                            <div class="instructor-title">Seasoned Product Leader &amp; EdTech Veteran</div>
+
+                        <!-- Instructor 2 -->
+                        <div class="instructor-card-container animate" style="text-align: left;">
+                            <div class="instructor-profile-header">
+                                <div class="instructor-photo">
+                                    <img src="vijay-dwivedi.png" alt="Vijay Dwivedi"
+                                        style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+                                        onerror="this.onerror=null; this.parentElement.innerHTML='VD';">
+                                </div>
+                                <div class="instructor-info">
+                                    <h3>Vijay Dwivedi <a href="https://www.linkedin.com/in/dwivedivijay" target="_blank"
+                                            class="instructor-social-icon"
+                                            style="margin-left: 10px; color: #0077b5;"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                            </svg></a></h3>
+                                    <div class="instructor-title">AI-First Product Leader | 10+ Years Scaling EdTech
+                                        Platforms</div>
+                                </div>
+                            </div>
+
+                            <div class="instructor-bio-text" style="margin-bottom: 20px;">
+                                <p>Vijay Dwivedi is a computer science engineer and AI-first product leader with 13+
+                                    years of experience building real-world platforms used by 10M+ users globally. An
+                                    IIM Bangalore executive program alumnus and trained in Design Thinking from MIT
+                                    Online, he inspires kids to think creatively, solve real problems, and confidently
+                                    build with AI.</p>
+                            </div>
+
+                            <div class="instructor-details-grid">
+                                <div class="detail-group">
+                                    <h4>Experience:</h4>
+                                    <ul>
+                                        <li><strong>Product Leader:</strong> 13+ years building platforms</li>
+                                        <li><strong>Impact:</strong> Products used by 10M+ users globally</li>
+                                        <li><strong>Expertise:</strong> AI-first product development</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-group">
+                                    <h4>Recognition:</h4>
+                                    <ul>
+                                        <li><strong>IIM Bangalore Alumnus</strong></li>
+                                        <li><strong>MIT Online Design Thinking</strong></li>
+                                        <li><strong>Computer Science Engineer</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="instructor-bio-text" style="margin-bottom: 20px;">
-                        <p>Nikhil Jain is a product leader with 8+ years of experience in PM and startup roles. He
-                            currently drives AI innovation at Great Learning and is an IIT Kharagpur alumnus. In this
-                            program, he inspires young minds to build, prototype, and scale their own AI-driven
-                            ventures.</p>
-                    </div>
-
-                    <div class="instructor-details-grid">
-                        <div class="detail-group">
-                            <h4>Experience:</h4>
-                            <ul>
-                                <li><strong>Product Leader:</strong> Multi-year PM experience</li>
-                                <li><strong>Founder:</strong> Built and ran a startup</li>
-                                <li><strong>Builder:</strong> 8+ years shipping real-world products</li>
-                            </ul>
-                        </div>
-                        <div class="detail-group">
-                            <h4>Recognition:</h4>
-                            <ul>
-                                <li><strong>IIT Kharagpur Alumnus</strong></li>
-                                <li><strong>EdTech Professional</strong></li>
-                                <li><strong>Mentored Young Builders</strong></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <button class="carousel-nav next" aria-label="Next Instructor">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </section>
@@ -2526,6 +2677,42 @@
             }, 10);
 
             evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+    <script>
+        // Instructor Carousel Logic
+        const wrapper = document.getElementById('instructors-carousel');
+        const prevBtn = document.querySelector('.carousel-nav.prev');
+        const nextBtn = document.querySelector('.carousel-nav.next');
+
+        if (wrapper && prevBtn && nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const cardWidth = wrapper.querySelector('.instructor-card-container').offsetWidth;
+                wrapper.scrollBy({ left: cardWidth + 24, behavior: 'smooth' });
+            });
+
+            prevBtn.addEventListener('click', () => {
+                const cardWidth = wrapper.querySelector('.instructor-card-container').offsetWidth;
+                wrapper.scrollBy({ left: -(cardWidth + 24), behavior: 'smooth' });
+            });
+
+            // Update button visibility based on scroll position
+            const updateButtons = () => {
+                const scrollLeft = wrapper.scrollLeft;
+                const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+
+                prevBtn.style.opacity = scrollLeft <= 10 ? '0.3' : '1';
+                prevBtn.style.pointerEvents = scrollLeft <= 10 ? 'none' : 'auto';
+
+                nextBtn.style.opacity = scrollLeft >= maxScroll - 10 ? '0.3' : '1';
+                nextBtn.style.pointerEvents = scrollLeft >= maxScroll - 10 ? 'none' : 'auto';
+            };
+
+            wrapper.addEventListener('scroll', updateButtons);
+            window.addEventListener('resize', updateButtons);
+            // Initial check
+            setTimeout(updateButtons, 100);
         }
     </script>
 </body>
